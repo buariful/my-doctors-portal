@@ -1,10 +1,11 @@
 import React from 'react';
+import footerBg from '../../assets/images/footer.png'
 
 const Footer = () => {
     return (
 
-        <footer>
-            <div className="footer p-10 bg-base-300 text-base-content">
+        <footer style={{ "background": `url(${footerBg})` }}>
+            <div className="footer p-10 text-base-content">
                 <div>
                     <span className="footer-title">Services</span>
                     <a className="link link-hover">Emergency Checkup</a>
@@ -25,7 +26,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className='p-4 bg-base-300 text-base-content'>
+            <div className='p-4 text-base-content'>
                 <p>Copyright © 2022 - All right reserved by BEXIMCO Industries Ltd</p>
             </div>
         </footer>
