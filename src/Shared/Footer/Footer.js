@@ -4,20 +4,20 @@ import footerBg from '../../assets/images/footer.png'
 const Footer = () => {
     return (
 
-        <footer style={{ "background": `url(${footerBg})` }}>
+        <footer className='bg-cover bg-center' style={{ "background": `url(${footerBg})` }}>
             <div className="footer p-10 text-base-content">
                 <div>
                     <span className="footer-title">Services</span>
-                    <a className="link link-hover">Emergency Checkup</a>
-                    <a className="link link-hover">Monthly Checkup</a>
-                    <a className="link link-hover">Weekly Checkup</a>
-                    <a className="link link-hover">Deep Checkup</a>
+                    <a className="link link-hover" href='/'>Emergency Checkup</a>
+                    <a className="link link-hover" href='/'>Monthly Checkup</a>
+                    <a className="link link-hover" href='/'>Weekly Checkup</a>
+                    <a className="link link-hover" href='/'>Deep Checkup</a>
                 </div>
                 <div>
                     <span className="footer-title">ORAL HEALTH</span>
-                    <a className="link link-hover">Fluoride Treatement</a>
-                    <a className="link link-hover">Cavity Filling</a>
-                    <a className="link link-hover">Teath Whitening</a>
+                    <a className="link link-hover" href='/home'>Fluoride Treatement</a>
+                    <a className="link link-hover" href='/home'>Cavity Filling</a>
+                    <a className="link link-hover" href='/home'>Teath Whitening</a>
                 </div>
                 <div>
                     <span className="footer-title">OUR ADDRESS</span>

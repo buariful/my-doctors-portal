@@ -13,7 +13,7 @@ const Contact = () => {
                 <input type="text" name="subject" className='border-none rounded-lg pl-3 py-2 w-full focus:outline-green-200 mb-4' placeholder='Subject' />
 
                 <textarea type="email" name="email" className='border-none rounded-lg pl-3 py-2 w-full focus:outline-green-200 mb-4' placeholder='Your message' rows="4" />
-                <button class="btn bg-gradient-to-l from-primary to-secondary text-white border-none px-5">Submit</button>
+                <button className="btn bg-gradient-to-l from-primary to-secondary text-white border-none px-5">Submit</button>
             </form>
         </div>
     );
