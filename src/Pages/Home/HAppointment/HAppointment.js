@@ -8,7 +8,7 @@ const HAppointment = () => {
         <div className='flex items-center mt-32 px-14' style={{ background: `url(${doctorBg})` }}>
             <div className='flex-1 hidden md:block' >
 
-                <img src={doctor} alt="doctor" className='w-full ml-auto' style={{ "margin-top": "-82px" }} />
+                <img src={doctor} alt="doctor" className='w-full ml-auto' style={{ "marginTop": "-82px" }} />
             </div>
             <div className='text-left flex-1 text-white'>
                 <h2 className='uppercase text-secondary font-bold text-xl mb-3'>our services </h2>

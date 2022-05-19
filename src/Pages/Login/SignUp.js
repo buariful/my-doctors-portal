@@ -1,57 +1,68 @@
-import React, { useEffect } from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import auth from '../../firebase.init'
-import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
 
-const Login = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    let from = location.state?.from?.pathname || "/appointment";
-
+const SignUp = () => {
     // firebase authentication
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const [
-        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth);
-
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, upError] = useUpdateProfile(auth);
 
     // react hook from
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const onSubmit = data => {
 
-        signInWithEmailAndPassword(data.email, data.password)
+
+    const navigate = useNavigate();
+
+    const onSubmit = async data => {
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.jkonoText });
     };
 
-
-
-    useEffect(() => {
-        if (user || gUser) {
-            navigate(from, { replace: true });
-        }
-    }, [user, gUser, from, navigate])
-
-    let logError;
-    if (gError || error) {
-        logError = <p className='text-red-700'>{gError?.message || error?.message}</p>
+    if (gUser || user) {
+        navigate('/appointment')
     }
-
-    if (loading || gLoading) {
+    let signError;
+    if (gError || error || upError) {
+        signError = <p className='text-red-700'>{gError?.message || error?.message || upError?.message}</p>
+    }
+    if (loading || gLoading || updating) {
         return <button className='btn loading'>Loading</button>
     }
-
     return (
         <div className='flex justify-center items-center h-screen'>
             <div className="card w-96 bg-base-100 shadow-xl px-4 py-4">
                 <div className="card-body">
-                    <h2 className="card-title mx-auto">Login</h2>
-                    <p className='text-red-500 font-bold'>{logError}</p>
+                    <h2 className="card-title mx-auto">Sign Up</h2>
+                    {signError}
+                    {/* <p className='text-2xl text-red-500 font-bold'>{signError}</p> */}
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {/* daisy ui form */}
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input type="text" placeholder="Enter your name please" className="input input-bordered w-full max-w-xs"
+                                {...register("jkonoText", {
+                                    maxLength: {
+                                        value: 15,
+                                        message: 'enter max 15 letters' // JS only: <p>error message</p> TS only support string
+                                    }
+                                })}
+                            />
+                            <label className="label">
+                                {errors.jkonoText?.type === 'maxLength' && <span className="label-text-alt text-red-500 font-semibold">{errors.jkonoText.message}</span>}
+                            </label>
+                        </div>
+
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -106,10 +117,10 @@ const Login = () => {
 
                                 </label>
                             </div>
-                            <input type="submit" className='btn w-full text-white max-w-xs' value='login' />
+                            <input type="submit" className='btn w-full text-white max-w-xs' value='signup' />
                         </div>
                     </form>
-                    <small>New to doctors portal. <Link to='/signup' className='text-secondary font-semibold '>Please signup</Link></small>
+                    <small>Already have an account <Link to='/login' className='text-secondary font-semibold '>Login</Link></small>
                 </div>
                 <div className="divider">OR</div>
                 <button className="btn btn-outline" onClick={() => signInWithGoogle()}>Continue with Google</button>
@@ -118,4 +129,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
